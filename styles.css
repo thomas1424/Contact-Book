@@ -1,4 +1,26 @@
-/* Basic Reset & Body Styling */
+/* Import Google Fonts (already in HTML <link>) */
+
+/* --- Variables & Basic Reset --- */
+:root {
+    --primary-color: #1a73e8; /* Google Blue */
+    --secondary-color: #dadce0; /* Light grey */
+    --text-color: #3c4043; /* Dark grey */
+    --text-color-light: #5f6368; /* Medium grey */
+    --background-color: #f8f9fa; /* Very light grey/off-white */
+    --white-color: #ffffff;
+    --border-color: #dadce0;
+    --error-color: #d93025; /* Google Red */
+    --success-color: #1e8e3e; /* Google Green */
+    --avatar-colors: #d81b60, #8e24aa, #1e88e5, #00897b, #43a047, #f4511e, #546e7a;
+
+    --font-family: 'Roboto', sans-serif;
+    --base-font-size: 16px;
+    --border-radius: 8px; /* More subtle rounding */
+    --input-border-radius: 4px;
+    --box-shadow-light: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    --box-shadow-medium: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,343 +28,590 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f7f6; /* Light grey background */
-    color: #333;
-    padding: 20px;
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.5;
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff; /* White container background */
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Ensures padding is contained */
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input { font-family: inherit; }
+
+/* --- Material Icons Base Style --- */
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px; /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    vertical-align: middle; /* Align icons nicely with text */
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
 }
 
-header {
-    background-color: #4a90e2; /* Pleasant blue */
-    color: #fff;
-    padding: 20px 30px;
+/* --- App Layout --- */
+.app-layout {
+    display: grid;
+    grid-template-columns: 256px 1fr; /* Fixed sidebar, flexible main area */
+    height: 100vh;
+    overflow: hidden; /* Prevent body scrolling */
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    background-color: var(--white-color);
+    border-right: 1px solid var(--border-color);
+    padding: 16px 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.create-contact-btn {
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 12px;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 12px 24px 12px 16px; /* More padding right */
+    margin: 8px 16px 24px 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+.create-contact-btn:hover {
+    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+    background-color: #f1f3f4; /* Slight grey on hover */
+}
+.create-contact-btn .material-icons {
+    color: var(--primary-color);
+    font-size: 20px;
 }
 
-header h1 {
-    margin-bottom: 10px; /* Space below title on wrap */
-    font-weight: 600;
+.sidebar-menu {
+    flex-grow: 1;
+}
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 24px;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: var(--text-color);
+    border-radius: 0 25px 25px 0; /* Rounded right corners */
+    margin-right: 12px; /* Space for rounding */
+    transition: background-color 0.2s ease;
+}
+.sidebar-menu li a .material-icons {
+    margin-right: 20px;
+    color: var(--text-color-light);
+    font-size: 20px;
+}
+.sidebar-menu li.active a {
+    background-color: var(--primary-color-light, #e8f0fe); /* Light blue for active */
+    color: var(--primary-color);
+    font-weight: 700;
+}
+.sidebar-menu li.active a .material-icons {
+    color: var(--primary-color);
+}
+.sidebar-menu li:not(.active) a:hover {
+    background-color: #f1f3f4; /* Subtle hover */
+}
+.contact-count {
+    margin-left: auto;
+    font-size: 0.75rem; /* 12px */
+    color: var(--text-color-light);
+    background-color: #e8eaed;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+.sidebar-menu li.active .contact-count {
+    color: var(--primary-color);
+    background-color: transparent;
 }
 
-header h1 i {
-    margin-right: 10px;
+/* --- Main Content Area --- */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Allow main area to scroll */
+    background-color: var(--white-color);
 }
 
-/* Search Bar */
+.main-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #f1f3f4; /* Slight contrast for header */
+    position: sticky; /* Make header sticky */
+    top: 0;
+    z-index: 10;
+}
+
 .search-container {
     position: relative;
-    display: flex;
-    align-items: center;
+    flex-grow: 1;
+    max-width: 720px; /* Max width like Google */
+    margin: 0 auto; /* Center the search bar */
 }
 
 .search-icon {
     position: absolute;
-    left: 15px;
-    color: #aaa;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color-light);
+    font-size: 24px;
 }
 
 #searchInput {
-    padding: 10px 15px 10px 40px; /* Space for icon */
-    border: 1px solid #ddd;
-    border-radius: 20px; /* Rounded corners */
-    width: 250px; /* Adjust width as needed */
-    transition: box-shadow 0.3s ease;
-}
-
-#searchInput:focus {
-    outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
-}
-
-main {
-    padding: 20px 30px;
-}
-
-/* Card Styling */
-.card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0; /* Softer border */
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.card h2 {
-    color: #4a90e2;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    font-weight: 500;
-}
-
-.card h2 i {
-    margin-right: 8px;
-}
-
-/* Form Styling */
-#contactForm {
-    display: grid;
-    gap: 15px; /* Spacing between form elements */
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column; /* Labels above inputs */
-}
-
-.form-group label {
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #555;
-}
-
-.form-group label i {
-    margin-right: 5px;
-    color: #4a90e2; /* Icon color matches theme */
-}
-
-.form-group input[type="text"],
-.form-group input[type="tel"],
-.form-group input[type="email"] {
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #4a90e2;
-}
-
-.form-buttons {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-    margin-top: 10px;
-}
-
-/* Button Styling */
-.btn {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 12px 16px 12px 56px; /* Left padding for icon */
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: var(--border-radius);
+    background-color: #e8eaed; /* Search background */
     font-size: 1rem;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
-    gap: 8px; /* Space between icon and text */
+    color: var(--text-color);
+    outline: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+#searchInput:focus {
+    background-color: var(--white-color);
+    box-shadow: var(--box-shadow-light);
+}
+#searchInput::placeholder {
+    color: var(--text-color-light);
 }
 
-.btn:active {
-    transform: scale(0.98); /* Slight press effect */
+.contact-list-container {
+    padding: 24px 32px;
+    flex-grow: 1;
 }
 
-.btn-primary {
-    background-color: #28a745; /* Green for save/add */
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #218838;
-}
-
-.btn-secondary {
-    background-color: #6c757d; /* Grey for cancel */
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-.btn-danger {
-    background-color: #dc3545; /* Red for delete */
-    color: white;
-    padding: 6px 12px; /* Smaller delete/edit buttons */
-    font-size: 0.9rem;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-.btn-warning {
-    background-color: #ffc107; /* Yellow for edit */
-    color: #333;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-}
-
-.btn-warning:hover {
-    background-color: #e0a800;
-}
-
-/* Error and Status Messages */
-.error-message {
-    color: #dc3545; /* Red for errors */
-    font-size: 0.85em;
-    margin-top: 3px;
-    display: block; /* Ensure it takes space */
-    min-height: 1em; /* Prevent layout shifts */
-}
-
-.status-message {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 5px;
+.list-title {
+    font-size: 1rem; /* 16px */
+    color: var(--text-color-light);
+    margin-bottom: 16px;
     font-weight: 500;
-    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.status-success {
-    background-color: #d4edda; /* Light green */
-    color: #155724;
-    border: 1px solid #c3e6cb;
+.contact-list-header {
+    display: grid;
+    grid-template-columns: 56px 2fr 2fr 1.5fr 80px; /* Avatar, Name, Email, Phone, Actions */
+    gap: 16px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.75rem; /* 12px */
+    color: var(--text-color-light);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.contact-list-header span:last-child { text-align: right; }
+
+.contact-list {
+    margin-top: 8px;
 }
 
-.status-error {
-    background-color: #f8d7da; /* Light red */
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-
-/* Contact List Styling */
-#contactList {
-    list-style: none;
-    padding: 0;
-}
-
-#contactList li {
-    background-color: #f8f9fa; /* Very light background for items */
-    border: 1px solid #eee;
-    border-radius: 5px;
-    padding: 15px 20px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
+.contact-list-item {
+    display: grid;
+    grid-template-columns: 56px 2fr 2fr 1.5fr 80px; /* Match header */
+    gap: 16px;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
     transition: background-color 0.2s ease;
 }
-
-#contactList li:hover {
-    background-color: #e9ecef;
+.contact-list-item:hover {
+    background-color: #f1f3f4; /* Hover effect */
+}
+.contact-list-item:last-child {
+    border-bottom: none;
 }
 
-.contact-details {
-    flex-grow: 1; /* Takes available space */
-    margin-right: 15px; /* Space before buttons */
-}
-
-.contact-details strong {
-    display: block; /* Name on its own line */
-    font-size: 1.1em;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.contact-details span {
-    display: block; /* Phone/Email on separate lines */
-    font-size: 0.95em;
-    color: #555;
-    margin-bottom: 3px;
-}
-
-.contact-details span i {
-    margin-right: 6px;
-    color: #777;
-    width: 15px; /* Align icons */
-    text-align: center;
-}
-
-.contact-actions {
+.contact-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     display: flex;
-    gap: 8px; /* Space between edit/delete buttons */
-    flex-shrink: 0; /* Prevent buttons from shrinking */
-    margin-top: 10px; /* Add space when wrapping */
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: var(--white-color);
+    font-size: 1rem;
+    text-transform: uppercase;
 }
+
+.contact-name {
+    font-weight: 500;
+    color: var(--text-color);
+}
+.contact-email, .contact-phone {
+    color: var(--text-color-light);
+    font-size: 0.875rem; /* 14px */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contact-item-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease;
+}
+.contact-list-item:hover .contact-item-actions {
+    opacity: 1; /* Show on hover */
+}
+
+.icon-btn {
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-color-light);
+    display: inline-flex; /* Ensure icon centers */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+.icon-btn:hover {
+    background-color: rgba(60, 64, 67, 0.08); /* Subtle hover background */
+}
+.icon-btn .material-icons { font-size: 20px; }
 
 .empty-message {
     text-align: center;
-    color: #888;
-    padding: 20px;
-    font-style: italic;
-    border: none !important; /* Override list item border */
-    background-color: transparent !important; /* Override list item background */
+    color: var(--text-color-light);
+    padding: 40px 20px;
+    font-size: 1rem;
 }
 
-/* Footer */
-footer {
+/* --- Modals --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0; /* Hidden by default */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+     transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+.modal-overlay.active {
+     opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+.modal-content {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-medium);
+    position: relative;
+    max-height: 90vh; /* Limit height */
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+/* Detail Modal Specific */
+.detail-modal-content {
+    width: 90%;
+    max-width: 500px; /* Max width for detail */
+    padding-top: 60px; /* Space for header elements */
+}
+.detail-header {
     text-align: center;
-    margin-top: 30px;
-    padding: 15px;
-    font-size: 0.9em;
-    color: #777;
-    border-top: 1px solid #eee;
+    padding: 24px 24px 0 24px;
+    position: relative;
+}
+.detail-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin: 0 auto 16px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--white-color);
+    background-color: var(--primary-color); /* Default color */
+}
+#detailName {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+.detail-actions {
+    position: absolute;
+    top: 16px;
+    right: 48px; /* Space from close button */
+    display: flex;
+    gap: 8px;
+}
+.detail-body {
+    padding: 16px 32px 32px 32px;
+    border-top: 1px solid var(--border-color);
+}
+.detail-body h3 {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: var(--text-color-light);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 0.9375rem; /* 15px */
+}
+.detail-item .material-icons {
+    color: var(--text-color-light);
+    margin-right: 24px;
+    width: 24px; /* Ensure alignment */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    #searchInput {
-        width: 100%; /* Full width on smaller screens */
-        margin-top: 10px;
-    }
-    main {
-        padding: 15px;
-    }
-    .card {
-        padding: 20px;
-    }
+/* Form Modal Specific */
+.form-modal-content {
+    width: 90%;
+    max-width: 480px;
+    padding: 24px 32px;
+}
+#formTitle {
+    font-size: 1.375rem; /* 22px */
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--text-color);
+}
+.form-avatar-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.form-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--white-color);
+    background-color: var(--secondary-color); /* Placeholder grey */
+}
+.form-group {
+    position: relative;
+    margin-bottom: 16px;
+}
+.form-group .input-icon {
+    position: absolute;
+    left: 12px;
+    top: 14px; /* Adjust vertical alignment */
+    color: var(--text-color-light);
+    font-size: 20px;
+}
+.form-group input {
+    width: 100%;
+    padding: 14px 16px 14px 48px; /* Padding for icon */
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--input-border-radius);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color); /* Focus ring */
+}
+.form-group input::placeholder { color: var(--text-color-light); }
+.error-message {
+    color: var(--error-color);
+    font-size: 0.75rem; /* 12px */
+    margin-top: 4px;
+    padding-left: 48px; /* Align with input text */
+    min-height: 1em;
+}
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
+/* --- Buttons General --- */
+.btn {
+    padding: 10px 24px;
+    border-radius: var(--input-border-radius);
+    font-weight: 500;
+    font-size: 0.875rem; /* 14px */
+    text-transform: capitalize;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+.btn-primary:hover {
+    background-color: #1967d2; /* Darker blue */
+    box-shadow: 0 1px 2px 0 rgba(66,133,244,0.3), 0 1px 3px 1px rgba(66,133,244,0.15);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid transparent; /* Maintain layout */
+}
+.btn-secondary:hover {
+    background-color: rgba(26, 115, 232, 0.08); /* Light blue background */
+}
+
+/* Status Messages (shared by modals) */
+.status-message {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    text-align: center;
+    display: none; /* Hidden by default */
+}
+.status-message.active { display: block; }
+.status-success {
+    background-color: #e6f4ea;
+    color: var(--success-color);
+    border: 1px solid #ceead6;
+}
+.status-error {
+    background-color: #fce8e6;
+    color: var(--error-color);
+    border: 1px solid #fcc6c0;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .app-layout {
+        grid-template-columns: 64px 1fr; /* Collapse sidebar */
     }
-    .container {
-        margin: 10px auto;
+    .sidebar { padding-top: 16px; }
+    .create-contact-btn {
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        margin: 8px auto 24px auto; /* Center button */
+        justify-content: center;
+        font-size: 0; /* Hide text */
     }
-    header {
-        padding: 15px 20px;
+    .create-contact-btn .material-icons { margin: 0; }
+    .sidebar-menu li a {
+        justify-content: center;
+        padding: 12px 0;
+        margin-right: 0;
+        border-radius: 0; /* Remove rounding */
     }
-     main {
-        padding: 10px;
-    }
-    .card {
-        padding: 15px;
-    }
-    .form-buttons {
-        flex-direction: column; /* Stack buttons vertically */
-    }
-    #contactList li {
-        flex-direction: column; /* Stack details and actions */
-        align-items: flex-start;
-    }
-    .contact-actions {
-        margin-top: 15px;
-        width: 100%; /* Make buttons take full width */
-        justify-content: flex-end; /* Align buttons right */
-    }
+     .sidebar-menu li a .material-icons { margin: 0; }
+    .sidebar-menu li a span:not(.material-icons):not(.contact-count) { display: none; } /* Hide text labels */
+     .contact-count { position: absolute; top: 8px; right: 8px; font-size: 10px; padding: 1px 4px;}
+     .sidebar-menu li { position: relative;} /* For count positioning */
+
+     .contact-list-header { display: none; } /* Hide header on smaller screens */
+     .contact-list-item {
+         grid-template-columns: 40px 1fr auto; /* Avatar, Info, Actions */
+         padding: 12px;
+         gap: 12px;
+     }
+      .contact-list-item > span:nth-child(3), /* Hide email/phone columns */
+      .contact-list-item > span:nth-child(4) { display: none; }
+       .contact-list-item .contact-info-stack { display: block; } /* Create a stack for name/email */
+       .contact-name { font-size: 1rem; }
+       .contact-email, .contact-phone { font-size: 0.8rem; } /* Smaller secondary info */
+       .contact-item-actions { opacity: 1; } /* Always show actions */
+}
+
+@media (max-width: 600px) {
+     .app-layout {
+        grid-template-columns: 1fr; /* Single column */
+        grid-template-rows: auto 1fr auto; /* Header, Main, Footer (Sidebar becomes footer bar) */
+        height: auto; /* Allow content height */
+        min-height: 100vh; /* Ensure it takes full height */
+     }
+     .sidebar {
+        grid-row: 3 / 4; /* Move sidebar to bottom */
+        flex-direction: row; /* Horizontal layout */
+        justify-content: space-around;
+        padding: 0;
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+        overflow-y: hidden;
+        height: 56px; /* Fixed footer height */
+     }
+      .create-contact-btn { display: none; } /* Hide floating button, maybe add fixed one later */
+      .sidebar-menu { display: flex; justify-content: space-around; width: 100%; }
+      .sidebar-menu li { flex: 1; }
+      .sidebar-menu li a { padding: 8px 0; height: 100%; flex-direction: column; font-size: 10px;}
+       .sidebar-menu li a .material-icons { margin: 0 0 4px 0; }
+       .contact-count { display: none; } /* Hide count on bottom bar */
+       .sidebar-menu li.active a { background-color: transparent; color: var(--primary-color); }
+        .sidebar-menu li.active a .material-icons { color: var(--primary-color); }
+         .sidebar-menu li:not(.active) a:hover { background-color: transparent; }
+
+      .main-content { grid-row: 2 / 3; }
+      .main-header { grid-row: 1 / 2; } /* Header stays at top */
+      .contact-list-container { padding: 16px; }
+      .detail-modal-content, .form-modal-content { width: 95%; max-height: 85vh;}
 }
