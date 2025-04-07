@@ -3,60 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Book</title>
+    <title>Contacts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-address-book"></i> Contact Book</h1>
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Search by name, phone, or email...">
-            </div>
-        </header>
-
-        <main>
-            <section id="contact-form-section" class="card">
-                <h2 id="form-title">Add New Contact</h2>
-                <form id="contactForm">
-                    <input type="hidden" id="contactId">
-
-                    <div class="form-group">
-                        <label for="nameInput"><i class="fas fa-user"></i> Name:</label>
-                        <input type="text" id="nameInput" required placeholder="e.g., John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="phoneInput"><i class="fas fa-phone"></i> Phone:</label>
-                        <input type="tel" id="phoneInput" placeholder="e.g., 123-456-7890">
-                        <small class="error-message" id="phoneError"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="emailInput"><i class="fas fa-envelope"></i> Email:</label>
-                        <input type="email" id="emailInput" placeholder="e.g., john.doe@example.com">
-                        <small class="error-message" id="emailError"></small>
-                    </div>
-                    <div class="form-buttons">
-                        <button type="submit" id="saveButton" class="btn btn-primary"><i class="fas fa-save"></i> Save Contact</button>
-                        <button type="button" id="cancelButton" class="btn btn-secondary" style="display: none;"><i class="fas fa-times"></i> Cancel Edit</button>
-                    </div>
-                     <p id="statusMessage" class="status-message"></p>
-                </form>
-            </section>
-
-            <section id="contact-list-section" class="card">
-                <h2><i class="fas fa-list-ul"></i> Contacts</h2>
-                <ul id="contactList">
-                    <li id="no-contacts-message" class="empty-message">Your contact book is empty.</li>
+    <div class="app-layout">
+        <nav class="sidebar">
+            <button class="create-contact-btn btn btn-primary" id="createContactBtn">
+                <span class="material-icons">add</span> Create contact
+            </button>
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a href="#">
+                        <span class="material-icons">people</span> Contacts
+                        <span class="contact-count" id="contactCount">0</span>
+                    </a>
+                </li>
                 </ul>
-            </section>
-        </main>
+        </nav>
 
-        <footer>
-            <p>&copy; 2025 Your Contact Book. Powered by HTML, CSS, JS.</p>
-        </footer>
+        <main class="main-content">
+            <header class="main-header">
+                <div class="search-container">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" id="searchInput" placeholder="Search contacts">
+                </div>
+                </header>
+
+            <div class="contact-list-container">
+                <h2 class="list-title">Contacts</h2>
+                <div class="contact-list-header">
+                    <span>Name</span>
+                    <span>Email</span>
+                    <span>Phone number</span>
+                    <span></span> </div>
+                <ul id="contactList" class="contact-list">
+                    <li id="no-contacts-message" class="empty-message">No contacts yet.</li>
+                </ul>
+            </div>
+        </main>
     </div>
+
+    <div class="modal" id="contactDetailModal">
+        <div class="modal-content detail-modal-content">
+            <button class="modal-close-btn" data-modal-id="contactDetailModal">
+                <span class="material-icons">close</span>
+            </button>
+            <div class="detail-header">
+                <div class="detail-avatar" id="detailAvatar"></div>
+                <h2 id="detailName">Contact Name</h2>
+                <div class="detail-actions">
+                     <button class="icon-btn" id="editContactBtn" title="Edit contact">
+                        <span class="material-icons">edit</span>
+                    </button>
+                    <button class="icon-btn" id="deleteContactBtn" title="Delete contact">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            </div>
+            <div class="detail-body">
+                <h3>Contact details</h3>
+                <div class="detail-item">
+                    <span class="material-icons">email</span>
+                    <span id="detailEmail">email@example.com</span>
+                </div>
+                <div class="detail-item">
+                    <span class="material-icons">phone</span>
+                    <span id="detailPhone">123-456-7890</span>
+                </div>
+                <p id="detailStatusMessage" class="status-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="contactFormModal">
+        <div class="modal-content form-modal-content">
+             <button class="modal-close-btn" data-modal-id="contactFormModal">
+                <span class="material-icons">close</span>
+            </button>
+            <h2 id="formTitle">Create contact</h2>
+            <form id="contactForm">
+                <input type="hidden" id="contactId"> <div class="form-avatar-section">
+                   <div class="form-avatar" id="formAvatar"></div>
+                </div>
+
+                <div class="form-group">
+                    <span class="material-icons input-icon">person</span>
+                    <input type="text" id="nameInput" placeholder="Name" required>
+                </div>
+                 <div class="form-group">
+                     <span class="material-icons input-icon">phone</span>
+                    <input type="tel" id="phoneInput" placeholder="Phone">
+                     <small class="error-message" id="phoneError"></small>
+                </div>
+                <div class="form-group">
+                     <span class="material-icons input-icon">email</span>
+                    <input type="email" id="emailInput" placeholder="Email">
+                     <small class="error-message" id="emailError"></small>
+                </div>
+
+                <p id="formStatusMessage" class="status-message"></p>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-form-btn" data-modal-id="contactFormModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary save-btn" id="saveButton">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay"></div>
 
     <script src="script.js"></script>
 </body>
