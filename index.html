@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Book</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-address-book"></i> Contact Book</h1>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, phone, or email...">
+            </div>
+        </header>
+
+        <main>
+            <section id="contact-form-section" class="card">
+                <h2 id="form-title">Add New Contact</h2>
+                <form id="contactForm">
+                    <input type="hidden" id="contactId">
+
+                    <div class="form-group">
+                        <label for="nameInput"><i class="fas fa-user"></i> Name:</label>
+                        <input type="text" id="nameInput" required placeholder="e.g., John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneInput"><i class="fas fa-phone"></i> Phone:</label>
+                        <input type="tel" id="phoneInput" placeholder="e.g., 123-456-7890">
+                        <small class="error-message" id="phoneError"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailInput"><i class="fas fa-envelope"></i> Email:</label>
+                        <input type="email" id="emailInput" placeholder="e.g., john.doe@example.com">
+                        <small class="error-message" id="emailError"></small>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" id="saveButton" class="btn btn-primary"><i class="fas fa-save"></i> Save Contact</button>
+                        <button type="button" id="cancelButton" class="btn btn-secondary" style="display: none;"><i class="fas fa-times"></i> Cancel Edit</button>
+                    </div>
+                     <p id="statusMessage" class="status-message"></p>
+                </form>
+            </section>
+
+            <section id="contact-list-section" class="card">
+                <h2><i class="fas fa-list-ul"></i> Contacts</h2>
+                <ul id="contactList">
+                    <li id="no-contacts-message" class="empty-message">Your contact book is empty.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Your Contact Book. Powered by HTML, CSS, JS.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
