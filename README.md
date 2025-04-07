@@ -31,27 +31,3 @@ This application is designed to be hosted on static web hosting services like **
     * **Browser/Device Specific:** Data is tied to the specific browser and user profile on a single computer. It's not automatically synced across devices.
     * **Storage Limit:** `localStorage` typically has a storage limit (around 5-10MB per origin), which is usually more than enough for a simple contact book.
     * **User Control:** Users can manually clear their browser's storage, which would delete all saved contacts for this application.
-
-## Deployment to GitHub Pages
-
-1.  **Create a GitHub Repository:** Create a new repository on GitHub (e.g., `my-contact-book`).
-2.  **Upload Files:** Upload `index.html`, `style.css`, and `script.js` to the main branch of your repository.
-3.  **Enable GitHub Pages:**
-    * Go to your repository's **Settings** tab.
-    * Scroll down to the **GitHub Pages** section.
-    * Under **Source**, select the branch you uploaded your files to (e.g., `main`).
-    * Select the `/ (root)` folder.
-    * Click **Save**.
-4.  **Access Your Site:** GitHub will provide you with a URL (usually `https://<your-username>.github.io/<repository-name>/`). It might take a minute or two for the site to become active. Visit this URL to use your deployed Contact Book!
-
-## Code Structure
-
-* **`index.html`:** Defines the HTML page structure, including the form, contact list area, and search bar. Links to CSS and JS files.
-* **`style.css`:** Contains all the CSS rules for styling the application's appearance and layout, including basic responsiveness.
-* **`script.js`:** Holds the JavaScript code that handles:
-    * Loading contacts from and saving contacts to `localStorage`.
-    * Rendering the list of contacts in the HTML.
-    * Handling form submissions for adding and editing contacts.
-    * Handling clicks on 'Edit' and 'Delete' buttons.
-    * Implementing the search/filter functionality.
-    * Performing basic input validation.
